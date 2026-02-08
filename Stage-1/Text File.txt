@@ -1,0 +1,19 @@
+Md Labeeb Hasan 
+2/08/2026
+Professor Eduardo Ceh-Varela
+Class Responsibility
+
+Class Group 1 - Consumer - Joseph H
+Passenger
+Booking
+Baggage
+
+Class Group 2 - Operations - Eugene R
+Flight
+Schedule
+Aircraft
+
+Class Group 3 - Infrastructure - Labeeb H
+Airline
+Airport
+Staff
