@@ -18,20 +18,21 @@ class Airline {
 
 class Airport {
   + airportCode: String         // "JFK", “LAX”
-  + name: String
-  + city: String
-  + country: String
-  + getGates()
+  + name: String                // Official airport name 
+  + city: String                // e.g. "New York"
+  + country: String             // e.g. "United States"
+  + getGates()                  // Retrieve list of available gates / gate assignment info
 }
 
 class Staff {
-  + staffId: String
-  + name: String
-  + email: String
-  + hireDate: Date
-  + department: String
-  + role: String         // Pilot, CabinCrew, GroundStaff, Admin, etc.
-  + status: String
-  + assignToFlight()
-  + updateAvailability()
+  + staffId: String             // Unique employee identifier 
+  + name: String                // Full name of the staff member
+  + email: String               // Work email address
+  + hireDate: Date              // Date when the employee was hired
+  + department: String         // e.g. "Flight Operations", "Cabin Services", "Ground Handling"
+  + role: String               // Pilot, CabinCrew, GroundStaff, Admin, etc.
+  + status: String             // e.g. "Active", "On Leave", "Training", "Retired"
+  + assignToFlight()           // Assign this staff member to a specific flight/crew
+  + updateAvailability()       // Update availability status 
 }
+
