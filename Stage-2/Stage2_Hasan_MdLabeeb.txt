@@ -1,0 +1,37 @@
+Md Labeeb Hasan
+660302633
+3/08/2026
+Professor Eduardo Ceh-Varela
+Stage 2
+Work Completed
+
+
+In this stage, I worked on the Airline, Airport, and Staff classes. The following are the classes, methods, and reasoning we are applying to the airline management system:
+
+class Airline {
+  + airlineCode: String     // e.g. "AA", "UA", "BA"
+  + name: String            // e.g. "American Airlines"
+  + headquarters: String    // e.g. "Dallas, USA"
+  + manageFleet()           // manage planes
+  + operateFlight()         // run flights
+}
+
+class Airport {
+  + airportCode: String         // "JFK", “LAX”
+  + name: String
+  + city: String
+  + country: String
+  + getGates()
+}
+
+class Staff {
+  + staffId: String
+  + name: String
+  + email: String
+  + hireDate: Date
+  + department: String
+  + role: String         // Pilot, CabinCrew, GroundStaff, Admin, etc.
+  + status: String
+  + assignToFlight()
+  + updateAvailability()
+}
