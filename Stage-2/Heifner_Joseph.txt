@@ -1,0 +1,44 @@
+Joseph Heifner
+3/08/2026
+Professor Eduardo Ceh-Varela
+Stage 2
+
+In this stage, I worked on the Passenger, Booking, Baggage classes that I assigned myself in stage 1, along with other parts of Stage 2. As the team leader of this stage, I checked in with my team members via online MS Teams meetings to discuss how we wanted to expand our classes while utilizing what we learned in each class. Each week we gained more and more understanding of how we should approach this Stage's work, and we revised our overall project several times. Once I met with you as team leader, we were able to get a better idea of what classes were necessary and what entities we may have overcomplicated. I had a heavy participation in the involvement of each new class, including the finalization of the UML structure. (Eugene was the one to put our text collaborations between the team into the actual PDF). 
+
+My initial assigned classes are as follows:
+
+Passenger{
+- passengerID: String
+- name: String
+- passportNumber: String
+- contactInfo: String
+
++ Passenger (String, String)
++ updateContactInfo (String): void
++ viewTickets(): ArrayList<Ticket>
+}
+
+Booking{
+- bookingID : String
+- bookingDate : Date 
+- status : String 
+- tickets : ArrayList<Ticket>
+
++ Booking(String)
++ addTicket(Ticket) : void
++ cancelBooking() : void
++ getTickets() : ArrayList<Ticket>
+}
+
+Baggage{
+- baggageID : String
+- weight : double  
+- status : String  
+
++ Baggage(String, double)
++ updateStatus(String) : void
+}
+
+The additional classes we collaborated on while figuring out the depth of our project (outside of the required 6) includes: 
+
+Aircraft, Airport, Ticket, Seat, Payment, Terminal, CrewAssignment, FlightAssignment, TicketManager, StaffManager, BookingManager, AirportManager. 
