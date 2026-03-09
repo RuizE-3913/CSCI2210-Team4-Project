@@ -1,0 +1,8 @@
+Eugene Ruiz
+3/08/2026
+Professor Eduardo Ceh-Varela
+Stage 2 Work Completed
+
+For Stage 2, I helped modify the domain classes in preparation of the UML Design. I worked with Joseph Heifner to expand the domains to include both private and public attributes in line with intended use of the entities within the system. Together, we also create the code for the UML Design that would become the PDF submission for Stage 2. I created the FlightManager class directly, as well as the final code for the UML Design, including the multiplicities.
+
+In addition, I contributed to the expansion of the entities and their attributes over several meetings we had during the Stage 2 planning, which would be refined as Joseph brought us more info from their meetings with the Professor.
