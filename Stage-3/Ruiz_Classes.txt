@@ -1,0 +1,158 @@
+' ===============================================
+' GROUP 3 – Flight Operations & Reservations
+' Assigned Programmer: Eugene Ruiz
+
+
+' Core Entity Classes
+' ───────────────────────────────────────────────
+
+class Flight {
+    - flightNumber: String
+    - origin: Airport
+    - destination: Airport
+    - departureTerminal: Terminal
+    - arrivalTerminal: Terminal
+    - departureTime: Schedule
+    - arrivalTime: Schedule
+    - status: String
+    - aircraft: Aircraft
+
+    + Flight(String flightNumber, Airport origin, Airport destination, Terminal departureTerminal, Terminal arrivalTerminal)
+    + getAvailableSeats() : int
+    + updateStatus(String newStatus) : void
+    + getFlightDetails() : String
+    + getOrigin() : Airport
+    + getDestination() : Airport
+    ' Keep Flight data and simple statuses. No collection management
+}
+
+class Schedule {
+    - scheduleID : String
+    - departureTime : String
+    - arrivalTime : String
+
+    + Schedule(String scheduleID, String departureTime, String arrivalTime)
+    + addFlight(Flight f) : void
+    + removeFlight(Flight f) : void
+    + getFlights() : ArrayList<Flight>
+    + getScheduleInfo() : String
+    ' Schedule coordinates timing. Keep relationship to Flight simple
+}
+
+class Booking {
+    - bookingID : String
+    - bookingDate : Date 
+    - status : String 
+    - tickets : ArrayList<Ticket>
+
+    + Booking(String bookingID)
+    + addTicket(Ticket t) : void
+    + cancelBooking() : void
+    + getTickets() : ArrayList<Ticket>
+    + getBookingStatus() : String
+    ' Booking manages its own tickets (NOT for payment or baggage logic)
+}
+
+class Ticket {
+    - ticketID : String  
+    - flight : Flight
+    - seat: Seat
+    - status : String 
+
+    + Ticket(String ticketID, Flight flight)
+    + assignSeat(Seat s) : void 
+    + cancelTicket() : void
+    + getTicketDetails() : String
+    ' Ticket links passenger choice to a specific flight/seat. Keep simple
+}
+
+class Payment {
+    - paymentId: String
+    - booking: Booking
+    - amount: double
+    - paymentDate: Date
+    - method: String
+    - status: String
+
+    + Payment(Booking booking, double amount, String method)
+    + processPayment() : boolean
+    + updateStatus(String newStatus) : void
+    + isCompleted() : boolean
+    + getPaymentDetails() : String
+    ' Payment handles transaction logic only. Collaborates with Booking
+}
+
+' ───────────────────────────────────────────────
+' Management Classes (Collections + Coordination)
+' ───────────────────────────────────────────────
+
+class BookingManager {
+    - bookings : ArrayList<Booking>
+
+    + BookingManager()
+    + createBooking(Passenger p) : Booking
+    + removeBooking(String bookingID) : void
+    + findBooking(String bookingID) : Booking
+    + getBookingsForPassenger(Passenger p) : List<Booking>
+    ' Manages collection of bookings and coordinates creation or cancellation
+}
+
+class TicketManager {
+    - tickets : ArrayList<Ticket>
+  
+    + TicketManager()
+    + createTicket(Passenger p, Flight f) : Ticket
+    + removeTicket(Ticket t) : void
+    + findTicket(String ticketID) : Ticket
+    ' Manages collection of tickets. Useful for search and other operations
+}
+
+class Airline {
+    - airlineName : String
+    - airportManager : AirportManager
+    - staffManager : StaffManager
+    - bookingManager : BookingManager
+    - ticketManager : TicketManager
+
+    + Airline(String airlineName)
+    + getAirportManager() : AirportManager
+    + getStaffManager() : StaffManager
+    + getBookingManager() : BookingManager
+    + getTicketManager() : TicketManager
+    + getAirlineName() : String
+    ' Airline will be a basic coordinator ONLY. NOT for operational logic 
+    ' (delegate everything to the appropriate managers per Stage 2 critiques) 
+}
+
+' ───────────────────────────────────────────────
+' Key Relationships for Group 3
+' ───────────────────────────────────────────────
+
+Flight "1" --> "1" Schedule : follows
+Flight "1" --> "0..1" Aircraft : uses
+Flight "1" *--> "0..*" Booking : has
+
+Booking "1" *--> "0..*" Ticket : contains
+Booking "1" o--> "0..1" Payment : hasPayment
+Ticket "1" --> "1" Flight : for
+Ticket "1" --> "1" Seat : reserves
+
+BookingManager "1" --> "0..*" Booking : manages
+TicketManager "1" --> "0..*" Ticket : manages
+Airline "1" --> "1" BookingManager : managesBookings
+Airline "1" --> "1" TicketManager : managesTickets
+Airline "1" --> "1" AirportManager : managesAirports   ' from Group 1
+Airline "1" --> "1" StaffManager : managesStaff        ' from Group 2
+
+' ===============================================
+' Immediate Next Steps for This Group (from our plan)
+' ===============================================
+' 1. Create FULL constructors + getters/setters for every attribute for all classes
+' 2. Implement the management classes (BookingManager, TicketManager) for all collection operations 
+'    (searching, adding, removing, coordinating), NOT for operations inside Booking, Ticket, etc.
+' 3. Implement Airline as a lighter coordinator that holds references to the managers only
+' 4. Keep in mind SRP and if a method is doing too much work, or redundant work, let us know if another class or manager is needed
+' 5. Make an CRC card for each class if you need to: Responsibilities + Collaborators
+'    (especially managers with their entities and cross-group classes like Flight with Airport/Terminal).
+' 6. Once core classes are done, push branch (Airline will tie groups together)
+' ===============================================
