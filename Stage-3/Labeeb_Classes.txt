@@ -1,0 +1,107 @@
+' ===============================================
+' GROUP 1 – Infrastructure & Location Management
+' Assigned Programmer: Md Labeeb
+
+
+' Core Entity Classes
+' ───────────────────────────────────────────────
+
+class Airport { 
+    - airportCode : String 
+    - name : String  
+    - location : String 
+    - terminals  : ArrayList<Terminal>
+
+    + Airport(String airportCode, String name, String location)
+    + getAirportInfo() : String
+    + addTerminal(Terminal t) : void
+    + getTerminals() : ArrayList<Terminal>
+    ' Code all getters/setters; focus on data + simple actions.
+}
+
+class Terminal {
+    - terminalId: String
+    - name: String
+    - gates : ArrayList<String>
+  
+    + Terminal(String terminalId, String name)
+    + getTerminalInfo() : String
+    + addGate(String gate) : void
+    + getGates() : ArrayList<String>
+    ' Basic terminal data.
+}
+
+class Aircraft { 
+    - aircraftID : String  
+    - model : String   
+    - capacity : int
+    - status : String 
+    - seats : ArrayList<Seat>
+
+    + Aircraft(String aircraftID, String model, int capacity)
+    + getSeats() : ArrayList<Seat>
+    + updateStatus(String newStatus) : void
+    + getAircraftInfo() : String
+    ' Aircraft has just data and status; use FlightAssignment or managers for assignment logic
+}
+
+class Seat { 
+    - seatNumber : String
+    - classType : String
+    - isAvailable : boolean  
+
+    + Seat(String seatNumber, String classType)
+    + isSeatAvailable() : boolean
+    + setAvailability(boolean available) : void
+    ' Keep simple. Seat belongs to Aircraft. Add getters/setters
+}
+
+class Baggage { 
+    - baggageID : String
+    - weight : double  
+    - status : String  
+
+    + Baggage(String baggageID, double weight)
+    + updateStatus(String newStatus) : void
+    + getBaggageInfo() : String
+    ' Represents individual baggage items only. Status updates could also work
+}
+
+' ───────────────────────────────────────────────
+' Management Class (Collection + Coordination)
+' ───────────────────────────────────────────────
+
+class AirportManager {
+    - airports : ArrayList<Airport>
+
+    + AirportManager()
+    + addAirport(Airport a) : void
+    + removeAirport(String airportCode) : void
+    + findAirport(String airportCode) : Airport
+    + assignFlightToTerminal(Flight f, Terminal t, Airport a) : void     'addresses critique
+    + removeFlightFromAirport(Flight f, Airport a) : void
+    + getFlightsAtAirport(Airport a) : List<Flight>                      'collection search
+    ' Use this manager for all collection operations (searching, adding, removing, coordinating flights with terminals/airports)
+    ' Follows Single Responsibility Principle
+}
+
+' Key Relationships for Group 1
+' ───────────────────────────────────────────────
+
+Airport "1" *--> "0..*" Terminal : contains
+Aircraft "1" o--> "0..*" Seat : has
+Terminal "1" --> "0..*" Flight : uses          ' Fixed - single relationship only (per critique & screenshot)
+AirportManager "1" --> "0..*" Airport : manages
+AirportManager "1" --> "0..*" Flight : managesFlights   ' Added to make interaction explicit (per critique)
+
+
+
+' Immediate Next Steps
+' ===============================================
+' 1. Create FULL constructors + getters/setters for every attribute for all classes
+' 2. Identifying Methods (Verbs) if needed
+' 3. For AirportManager: When coding, focus on managing collections and coordinating (search/filter/assign)
+' 4. Keep in mind SRP and if a method is doing too much work, or redundant work, let us know if another class or manager is needed
+' 5. Make an CRC card for each class if you need to: Responsibilities + Collaborators
+' 6. Once done, push your branch so other groups can reference these classes
+' ===============================================
