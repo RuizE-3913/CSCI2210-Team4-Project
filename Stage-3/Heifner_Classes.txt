@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ' ===============================================
 ' GROUP 2 – Personnel & Assignments
 ' Assigned Programmer: Joseph Heifner
@@ -112,3 +113,117 @@ StaffManager "1" --> "0..*" StaffAssignment : creates
 ' 7. Once done, push your branch so other groups can reference these classes
 
 ' ===============================================
+=======
+' ===============================================
+' GROUP 2 – Personnel & Assignments
+' Assigned Programmer: Joseph Heifner
+
+
+' Core Entity Classes
+' ───────────────────────────────────────────────
+
+abstract class Person {
+    - name : String
+    - contactInfo : String
+
+    + Person(String name, String contactInfo)
+    + getName() : String
+    + getContactInfo() : String
+    + updateContactInfo(String newInfo) : void
+    ' Code this abstract base class first. Shared attributes and common behavior for the subclasses
+}
+
+class Staff extends Person {
+    - staffID : String
+    - role : String 
+
+    + Staff(String name, String contactInfo, String staffID, String role)
+    + viewSchedule() : Schedule
+    + getStaffID() : String
+    + getRole() : String
+    ' Extend Person. Keep role-specific. Careful NOT to duplicate name/contactInfo.
+}
+
+class Passenger extends Person {
+    - passengerID : String
+    - passportNumber : String
+
+    + Passenger(String name, String contactInfo, String passengerID, String passportNumber)
+    + viewTickets() : ArrayList<Ticket>
+    + updateContactInfo(String newInfo) : void   ' can override if needed
+    + getPassengerID() : String
+    + getPassportNumber() : String
+    ' Extend Person. Passenger-specific actions (they'll have different responsibilities from Staff)
+}
+
+class StaffAssignment {
+    - assignmentID : String
+    - flight : Flight 
+    - crewMembers : ArrayList<Staff>
+
+    + StaffAssignment(String assignmentID, Flight flight)
+    + assignCrewMember(Staff member) : void
+    + removeCrewMember(Staff member) : void
+    + getCrewMembers() : List<Staff>
+    + getFlight() : Flight
+    ' Represents assignment relationships. Keep as basic as needed
+}
+
+class FlightAssignment {
+    - assignmentID : String
+    - flight : Flight
+    - aircraft : Aircraft
+
+    + FlightAssignment(String assignmentID, Flight flight, Aircraft aircraft)
+    + getFlight() : Flight
+    + getAircraft() : Aircraft
+    + changeAircraft(Aircraft newAircraft) : void
+    ' Handles aircraft-to-flight links
+}
+
+' ───────────────────────────────────────────────
+' Management Class (Collection + Coordination)
+' ───────────────────────────────────────────────
+
+class StaffManager {
+    - staffMembers : ArrayList<Staff>
+
+    + StaffManager()
+    + addStaff(Staff s) : void
+    + removeStaff(String staffID) : void
+    + findStaff(String staffID) : Staff
+    + assignStaffToFlight(Staff s, Flight f) : void
+    + getStaffForFlight(Flight f) : List<Staff>
+    ' Use this manager for all collection operations inside Staff or Passenger classes
+    ' Follows Single Responsibility Principle
+}
+
+' ───────────────────────────────────────────────
+' Key Relationships for Group 2
+' ───────────────────────────────────────────────
+
+Person <|-- Staff
+Person <|-- Passenger
+
+StaffAssignment "1" --> "1" Flight : for
+StaffAssignment "1" o--> "0..*" Staff : assigns
+
+FlightAssignment "1" --> "1" Flight : assigns
+FlightAssignment "1" --> "1" Aircraft : uses
+
+StaffManager "1" --> "0..*" Staff : manages
+StaffManager "1" --> "0..*" StaffAssignment : creates
+
+
+
+
+' Immediate Next Steps
+' ===============================================
+' 1. Create FULL constructors + getters/setters for every attribute for all classes
+' 2. Identifying Methods (Verbs) if needed
+' 3. For AirportManager: When coding, focus on managing collections and coordinating (search/filter/assign)
+' 4. Keep in mind SRP and if a method is doing too much work, or redundant work, let us know if another class or manager is needed
+' 5. Make an CRC card for each class if you need to: Responsibilities + Collaborators
+' 6. Once done, push your branch so other groups can reference these classes
+' ===============================================
+>>>>>>> 5f86c65a31d8b156f5efa8546c859c626a47f1d0
