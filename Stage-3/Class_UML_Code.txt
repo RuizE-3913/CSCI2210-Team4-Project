@@ -1,0 +1,290 @@
+
+@startuml
+
+skinparam title {
+    FontSize      20
+}
+
+title
+  <b>Airline Management System</b>
+  Stage 2
+  
+  Md Labeeb Hasan
+  Joseph Heifner
+  Eugene Ruiz
+
+  CSCI 2210
+  3/8/2026
+
+end title
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam class {
+ BackgroundColor White
+ BorderColor Black
+ ArrowColor Black
+}
+
+' ───────────────────────────────────────────────
+' Core Domain Classes
+' ───────────────────────────────────────────────
+
+class Airline {
+- airlineName : String
+- flights : ArrayList<Flight> 
+- staff : ArrayList<Staff> 
+- aircraft : ArrayList<Aircraft>
+- airports : ArrayList<Airport>
+
++ Airline(String)
++ addFlight(Flight) : void
++ addAircraft(Aircraft) : void
++ hireStaff(Staff) : void
+}
+
+class Airport { 
+- airportCode : String 
+- name : String  
+- location : String 
+- terminals  : ArrayList<Terminal>
+
++ Airport(String, String)
++ getAirportInfo() : String
+}
+
+class Terminal {
+ - terminalId: String
+ - name: String
+ - gates : ArrayList<String>
+  
++ Terminal(String, String)
++ getTerminalInfo() : String
+}
+
+class Aircraft { 
+- aircraftID : String  
+- model : String   
+- capacity : int
+- status : String 
+- seats : ArrayList<Seat>
+
++ Aircraft(String, String, int)
++ getSeats() : ArrayList<Seat>
++ updateStatus(String) : void
+}
+
+class Flight {
+- flightNumber: String
+- origin: Airport
+- destination: Airport
+- departureTerminal: Terminal
+- arrivalTerminal: Terminal
+- departureTime: Schedule
+- arrivalTime: Schedule
+- status: String
+- aircraft: Aircraft
+
++ Flight (String, Airport, Airport, Terminal, Terminal)
++ getAvailableSeats (): int
++ updateStatus (String): void
+}
+
+class Schedule {
+- scheduleID : String
+- departureTime : String
+- arrivalTime : String
+- flights : ArrayList<Flight>
+
++ Schedule(String, Date)
++ addFlight(Flight) : void
++ removeFlight(Flight) : void
++ getFlights() : ArrayList<Flight>
+}
+
+class Passenger { 
+- passengerID: String
+- name : String
+- passportNumber : String
+- contactInfo : String
+
++ Passenger (String, String)
++ updateContactInfo (String) : void
++ viewTickets () : ArrayList<Ticket>
+}
+
+class Booking {
+- bookingID : String
+- bookingDate : Date 
+- status : String 
+- tickets : ArrayList<Ticket>
+
++ Booking(String)
++ addTicket(Ticket) : void
++ cancelBooking() : void
++ getTickets() : ArrayList<Ticket>
+}
+
+class Payment {
+  - paymentId: String
+  - booking: Booking
+  - amount: double
+  - paymentDate: Date
+  - method: String	// e.g., "credit_card", "paypal", "bank_transfer"
+  - status: String	// e.g., "PENDING", "COMPLETED", "FAILED", "REFUNDED"
+  
+  + Payment(Booking booking, double amount, String method)
+  + processPayment(): boolean	// returns success or failure
+  + getPaymentId(): String
+  + getAmount(): double
+  + getPaymentDate(): Date
+  + getMethod(): String
+  + getStatus(): String
+  + updateStatus(String newStatus): void	// for refunds, etc.
+  + isCompleted(): boolean
+}
+
+class Ticket { 
+- ticketID : String  
+- flight : Flight
+- seat: Seat
+- status : String 
+
++ Ticket(String, Flight)
++ assignSeat(Seat) : void 
++ cancelTicket() : void
++ getTicketDetails() : String
+}
+
+class Seat { 
+- seatNumber : String
+- classType : String
+- isAvailable : boolean  
+
++ Seat(String, String)
++ isSeatAvailable() : boolean
+}
+
+class Staff {
+- staffID : String
+- name : String
+- role : String 
+- contactInfo : String
+
++ Staff (String, String, String)
++ updateContactInfo (String) : void
++ viewSchedule () : Schedule
+}
+
+class Baggage { 
+- baggageID : String
+- weight : double  
+- status : String  
+
++ Baggage(String, double)
++ updateStatus(String) : void
+}
+
+class StaffAssignment {
+- assignmentID : String
+- flight : Flight 
+- crewMembers : ArrayList<Staff>
+
++ StaffAssignment(String, Flight)
++ assignCrewMember(Staff) : void
++ removeCrewMember(Staff) : void
++ getCrewMembers() : List<Staff>
+}
+
+class FlightAssignment {
+- assignmentID  : String
+- flight  : Flight
+- aircraft  : Aircraft	// usually one
+
++ FlightAssignment(String, Flight, Aircraft)
++ getFlight()  : Flight
++ getAircraft()  : Aircraft
++ changeAircraft(Aircraft newAircraft) : void
+}
+
+class TicketManager {
+- tickets : ArrayList<Ticket>
+  
++ createTicket(Passenger, Flight) : Ticket
++ removeTicket(Ticket) : void
++ findTicket(String) : Ticket
+  }
+  
+class StaffManager {
+- staffMembers : ArrayList<Staff>
+  
++ addStaff(Staff) : void
++ removeStaff(String) : void
++ assignStaffToFlight(Staff, Flight) : void
+  }
+  
+class BookingManager {
+- bookings : ArrayList<Booking>
+  
++ createBooking(Passenger) : Booking
++ removeBooking(String) : void
++ findBooking(String) : Booking
+  }
+  
+class AirportManager {
+- airports : ArrayList<Airport>
+
++ addAirport(Airport): void
++ removeAirport(String): void
++ findAirport(String): Airport
++ assignFlightToAirport(Flight, Airport): void
++ removeFlightFromAirport(Flight, Airport): void
+  }
+
+' ───────────────────────────────────────────────
+' Domain Relationships
+' ───────────────────────────────────────────────
+
+Airline "1" o--> "0..*" Aircraft : owns
+Airline "1" --> "0..*" Flight : operates
+Airline "1" o--> "0..*" Staff : employs
+Airline "1" --> "0..*" Airport : serves
+
+Airport "1" *--> "0..*" Terminal : contains
+
+Terminal "1" --> "0..*" Flight : departureFrom
+Terminal "1" --> "0..*" Flight : arrivalAt
+
+Flight "1" --> "1" Schedule : follows
+Flight "1" --> "0..1" FlightAssignment : uses
+Flight "1" *--> "0..*" Booking : has
+Flight "1" --> "0..1" StaffAssignment : assignedCrew
+
+Aircraft "1" --> "0..*" Flight : assignedTo
+
+Passenger "1" --> "0..*" Booking : makes
+
+Booking "1" *--> "0..*" Ticket : contains
+Booking "1" o--> "0..*" Baggage : contains
+Booking "1" o--> "0..1" Payment : hasPayment
+
+Ticket "1" --> "1" Seat : reserves
+
+' ───────────────────────────────────────────────
+' Manager Relationships
+' ───────────────────────────────────────────────
+
+Airline "1" --> "1" AirportManager : managesAirports
+Airline "1" --> "1" StaffManager : managesStaff
+Airline "1" --> "1" BookingManager : managesBookings
+Airline "1" --> "1" TicketManager : managesTickets
+
+StaffManager "1" --> "0..*" StaffAssignment : creates
+BookingManager "1" --> "0..*" Booking : manages
+TicketManager "1" --> "0..*" Ticket : manages
+AirportManager "1" --> "0..*" Airport : manages
+
+@enduml
+
