@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' ===============================================
+' GROUP 3 – Core Entity Classes (FULL constructors + getters/setters)
+' ===============================================
+
+class Flight {
+  - flightNumber: String
+  - origin: Airport
+  - destination: Airport
+  - departureTerminal: Terminal
+  - arrivalTerminal: Terminal
+  - departureTime: Schedule
+  - arrivalTime: Schedule
+  - status: String
+  - aircraft: Aircraft
+
+  + Flight(String flightNumber, Airport origin, Airport destination, Terminal departureTerminal, Terminal arrivalTerminal, Schedule departureTime, Schedule arrivalTime, String status, Aircraft aircraft)
+  + getFlightNumber(): String
+  + setFlightNumber(String flightNumber): void
+  + getOrigin(): Airport
+  + setOrigin(Airport origin): void
+  + getDestination(): Airport
+  + setDestination(Airport destination): void
+  + getDepartureTerminal(): Terminal
+  + setDepartureTerminal(Terminal departureTerminal): void
+  + getArrivalTerminal(): Terminal
+  + setArrivalTerminal(Terminal arrivalTerminal): void
+  + getDepartureTime(): Schedule
+  + setDepartureTime(Schedule departureTime): void
+  + getArrivalTime(): Schedule
+  + setArrivalTime(Schedule arrivalTime): void
+  + getStatus(): String
+  + setStatus(String status): void
+  + getAircraft(): Aircraft
+  + setAircraft(Aircraft aircraft): void
+
+  + getAvailableSeats(): int
+  + updateStatus(String newStatus): void
+  + getFlightDetails(): String
+}
+
+@enduml
