@@ -5,7 +5,7 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 
 ' ===============================================
-' GROUP 3 – Core Entity Classes (FULL constructors + getters/setters)
+' Core Entity Classes
 ' ===============================================
 
 class Flight {
