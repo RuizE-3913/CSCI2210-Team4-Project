@@ -1,7 +1,6 @@
 
 
-
-import java.util.Date;
+import java.util.List;
 /**
  * Represents a staff member in the system.
  * Extends Person with staff-specific attributes and behaviors.
@@ -29,10 +28,11 @@ public class Staff extends Person {
     /**
      * Returns the staff member's schedule.
      * 
+     * @param manager the StaffManager used to retrieve all staff assignments to search for
      * @return the schedule
      */
     public Schedule viewSchedule(StaffManager manager) {
-        Schedule mySchedule = new Schedule("SCHEDULE-" + this.getStaffID(), new Date());
+        Schedule mySchedule = new Schedule("SCHEDULE-" + this.getStaffID(), "DEPARTURE TIME", "ARRIVAL TIME");
         
         List<StaffAssignment> assignments = manager.getAllAssignments();
         
