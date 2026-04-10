@@ -1,7 +1,7 @@
 
 /** 
  * @author Eugene Ruiz
- * @version 2.8
+ * @version 2.8.1
  * @date 2026-04-08
  * CSCI 2210 Project Stage 3
 */
@@ -20,6 +20,7 @@ public class Flight {
     private Schedule arrivalTime;
     private String status;
     private Aircraft aircraft;
+    private FlightAssignment flightAssignment;
 
     /**
      * Constructor, ensures Flight state
@@ -60,6 +61,22 @@ public class Flight {
     public void setAircraft(Aircraft aircraft) { this.aircraft = aircraft; }
 
     /**
+     * Returns the FlightAssignment linked to this flight (optional).
+     * @return the FlightAssignment or null if none assigned
+     */
+    public FlightAssignment getFlightAssignment() {
+        return flightAssignment;
+    }
+
+    /**
+     * Links (or updates) the FlightAssignment for this flight.
+     * @param flightAssignment the assignment to link (can be null)
+     */
+    public void setFlightAssignment(FlightAssignment flightAssignment) {
+        this.flightAssignment = flightAssignment;
+    }
+
+    /**
      * Returns number of available seats on this flight
      */
     public int getAvailableSeats() {
@@ -74,9 +91,14 @@ public class Flight {
 
     /**
      * Returns a formatted summary of key flight details
+     * Now includes FlightAssignment info when present
      */
     public String getFlightDetails() {
+        String assignmentInfo = (flightAssignment != null) 
+            ? " | Assignment: " + flightAssignment.getAssignmentID() 
+            : " | No assignment yet";
         return "Flight: " + flightNumber + " | From: " + (origin != null ? origin.getAirportCode() : "N/A") +
-               " | To: " + (destination != null ? destination.getAirportCode() : "N/A") + " | Status: " + status;
+               " | To: " + (destination != null ? destination.getAirportCode() : "N/A") + 
+               " | Status: " + status + assignmentInfo;
     }
 }

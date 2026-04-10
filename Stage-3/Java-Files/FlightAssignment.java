@@ -45,6 +45,14 @@ public class FlightAssignment {
     }
 
     /**
+     * Returns the unique assignment identifier.
+     * Required by Flight.getFlightDetails().
+     */
+    public String getAssignmentID() {
+        return assignmentID;
+    }
+
+    /**
      * Changes the aircraft assigned to this flight.
      * 
      * @param newAircraft the new Aircraft to assign
