@@ -9,14 +9,14 @@ public class MainTester {
         System.out.println("=== AIRLINE MANAGEMENT SYSTEM TESTER. DUMMY OBJECTS (Happy Path) ===");
         System.out.println("Testing full integration of classes\n");
 
-        // 1. Light Coordinator (Airline)
+        // 1. Lite Coordinator (Airline)
         Airline airline = new Airline("SkyHigh Airlines");
         AirportManager airportManager = airline.getAirportManager();
         StaffManager staffManager = airline.getStaffManager();
         BookingManager bookingManager = airline.getBookingManager();
         TicketManager ticketManager = airline.getTicketManager();
 
-        // 2. LABEEB – Infrastructure (stubs)
+        // 2. LABEEB – Infrastructure
         Airport phx = new Airport("PHX", "Phoenix Sky Harbor", "Phoenix, AZ, USA");
         Airport lax = new Airport("LAX", "Los Angeles International", "Los Angeles, CA, USA");
         airportManager.addAirport(phx);
@@ -60,7 +60,13 @@ public class MainTester {
         // 5b. HEIFNER – Test Staff.viewSchedule()
         System.out.println("\n--- STAFF VIEW SCHEDULE (HEIFNER CRC) ---");
         captain.viewSchedule(staffManager);   //
+        System.out.println("Captain Elena Ruiz Schedule:");
+        Schedule captainSchedule = captain.viewSchedule(staffManager);
+        System.out.println(captainSchedule.getScheduleInfo());
         attendant.viewSchedule(staffManager); //
+        System.out.println("\nMaria Lopez Schedule:");
+        Schedule attendantSchedule = attendant.viewSchedule(staffManager);
+        System.out.println(attendantSchedule.getScheduleInfo());
 
         // 6. RUIZ – Booking & Ticket (core is HEIFNER with RUIZ bridge)
         Booking booking1 = bookingManager.createBooking(john);
@@ -100,9 +106,11 @@ public class MainTester {
         System.out.println("Available seats: " + flightAA123.getAvailableSeats());
 
         // 9. Payment (RUIZ)
-        Payment payment = new Payment(booking1, 299.99, "CREDIT_CARD");
+        Payment paymentJohn = new Payment(booking1, 299.99, "CREDIT_CARD");
+        Payment paymentEduardo = new Payment(booking1, 149.99, "DEBIT_CARD");
         System.out.println("\n--- PAYMENT DETAILS ---");
-        System.out.println(payment.getPaymentDetails());
+        System.out.println(paymentJohn.getPaymentDetails());
+        System.out.println(paymentEduardo.getPaymentDetails());
 
         System.out.println("\n=== TEST COMPLETE. All Dummy objects created and linked ===");
     }
