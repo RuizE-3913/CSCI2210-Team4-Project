@@ -1,0 +1,9 @@
+Joseph Heifner
+660286383
+4/12/2026
+Professor Eduardo Ceh-Varela
+Stage 3
+
+Work Completed:
+
+In this stage, I was responsible for working on Classes responsible for Personnel and Assignments since they would be collaborating with eachother. The classes are as follows: Person, Passenger, Staff, StaffAssignment, StaffManager, FlightAssignment. I was also responsible for updating the UML diagram with all of the newly changed relationships, methods, and classes that were added onto the original diagram. I helped with organizing team meetings and coordinating with the team leader to make CRC cards for easier understanding for the classes, as well as communicating any adjustments that would help avoid errors within the code. 
