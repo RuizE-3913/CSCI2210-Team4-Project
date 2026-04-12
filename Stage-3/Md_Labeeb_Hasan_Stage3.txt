@@ -1,0 +1,110 @@
+Md Labeeb Hasan
+660302633
+4/11/2026
+Professor Eduardo Ceh-Varela
+Stage 3
+
+Work Completed
+
+In this stage, I worked on the Airport, Terminal, Aircraft, Seat, Baggage, and AirportManager
+classes. The following are the classes, methods, and reasoning we are applying to the airline
+management system:
+
+class Airport {
+  - airportCode : String          // IATA/ICAO code e.g. "JFK", "LAX"
+  - name : String                 // Official airport name e.g. "John F. Kennedy"
+  - location : String             // City/country e.g. "New York, USA"
+  - terminals : ArrayList<Terminal> // List of terminals belonging to this airport
+
+  + Airport(String airportCode, String name, String location)  // Constructor
+  + getAirportInfo() : String     // Returns formatted summary of airport data
+  + addTerminal(Terminal t) : void    // Adds a terminal to this airport
+  + removeTerminal(String terminalId) : void  // Removes a terminal by ID
+  + getTerminals() : ArrayList<Terminal>      // Returns list of terminals
+  // Full getters and setters for all instance variables
+}
+
+class Terminal {
+  - terminalId : String           // Unique identifier e.g. "T1", "T2"
+  - name : String                 // Display name e.g. "Terminal 1"
+  - gates : ArrayList<String>     // Gate labels e.g. "A1", "B12"
+
+  + Terminal(String terminalId, String name)  // Constructor
+  + getTerminalInfo() : String    // Returns formatted summary of terminal data
+  + addGate(String gate) : void   // Adds a gate label to this terminal
+  + removeGate(String gate) : void  // Removes a gate label
+  + getGates() : ArrayList<String>  // Returns list of gate labels
+  // Flight coordination is delegated to AirportManager to follow SRP
+  // Full getters and setters for all instance variables
+}
+
+class Aircraft {
+  - aircraftID : String           // Unique ID e.g. "AC-001"
+  - model : String                // Model name e.g. "Boeing 737"
+  - capacity : int                // Total number of seats
+  - status : String               // e.g. "Active", "Maintenance", "Grounded"
+  - seats : ArrayList<Seat>       // List of seat objects belonging to this aircraft
+
+  + Aircraft(String aircraftID, String model, int capacity)  // Constructor
+  + generateSeats() : void        // Auto-fills capacity number of Economy seats
+  + addSeat(Seat seat) : void     // Manually adds a single seat (custom layouts)
+  + updateStatus(String newStatus) : void  // Updates operational status
+  + getAircraftInfo() : String    // Returns formatted summary of aircraft data
+  + countAvailableSeats() : int   // Counts and returns number of open seats
+  + findSeat(String seatNumber) : Seat  // Finds a seat by its label, null if not found
+  // Assignment logic lives in FlightAssignment per UML design
+  // Full getters and setters for all instance variables
+}
+
+class Seat {
+  - seatNumber : String           // Seat label e.g. "12A"
+  - classType : String            // Cabin class e.g. "Economy", "Business", "First"
+  - isAvailable : boolean         // true = open, false = taken; defaults to true
+
+  + Seat(String seatNumber, String classType)  // Constructor
+  + isSeatAvailable() : boolean   // Returns current availability
+  + setAvailability(boolean available) : void  // Sets seat as open or taken
+  // Full getters and setters for all instance variables
+}
+
+class Baggage {
+  - baggageID : String            // Unique identifier e.g. "BAG-00123"
+  - weight : double               // Weight in kilograms
+  - status : String               // e.g. "Checked In", "Loaded", "In Transit",
+                                  //      "Claimed", "Lost"; defaults to "Checked In"
+
+  + Baggage(String baggageID, double weight)  // Constructor
+  + updateStatus(String newStatus) : void  // Updates tracking status
+  + getBaggageInfo() : String     // Returns formatted summary of baggage data
+  // Full getters and setters for all instance variables
+}
+
+class AirportManager {
+  - airports : ArrayList<Airport> // Collection of all managed airports
+
+  + AirportManager()              // Constructor
+  + addAirport(Airport a) : void          // Adds an airport to the collection
+  + removeAirport(String airportCode) : void  // Removes airport by code
+  + findAirport(String airportCode) : Airport // Searches by code, null if not found
+  + getAirports() : ArrayList<Airport>        // Returns full list of airports
+  + assignFlightToTerminal(Flight f, Terminal t, Airport a) : void
+                                  // Assigns a flight to a terminal at a given airport
+  + removeFlightFromAirport(Flight f, Airport a) : void
+                                  // Removes a flight from all terminals at an airport
+  + getFlightsAtAirport(Airport a) : List<Flight>
+                                  // Returns all flights at a given airport
+  + getFlightsAtTerminal(Airport a, Terminal t) : List<Flight>
+                                  // Returns flights at a specific terminal
+  // Uses a parallel key/list structure (airportCode::terminalId) internally
+  // to track flight-terminal assignments without extra dependencies
+  // Follows Single Responsibility Principle (SRP)
+  // References Flight.java from Group 2 — placeholder stub needed until pushed
+}
+
+Key Relationships:
+
+  Airport      "1"  *-->  "0..*"  Terminal     : contains (composition)
+  Aircraft     "1"  o-->  "0..*"  Seat         : has (aggregation)
+  Terminal     "1"  -->   "0..*"  Flight       : uses
+  AirportManager "1" --> "0..*"  Airport      : manages
+  AirportManager "1" --> "0..*"  Flight       : managesFlights
