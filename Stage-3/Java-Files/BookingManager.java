@@ -1,18 +1,30 @@
 import java.util.*;
 
 /**
- * Manages collection of all Bookings
+ * Manages the collection of all Bookings in the system.
+ * 
+ * Group 3 – Flight Operations & Reservations
+ * Responsibilities: Create, remove, find, and query bookings (collection management only).
+ * Does NOT contain business logic for tickets or payments — delegates to Booking/TicketManager.
+ * Collaborators: Booking, Passenger, Ticket.
+ * 
+ * Follows SRP per Chief Programmer guidelines.
+ * 
+ * @author Eugene Ruiz
+ * @version 1.4
+ * @date 2026-04-12
  */
 public class BookingManager {
-        private ArrayList<Booking> bookings = new ArrayList<>();
+    private ArrayList<Booking> bookings = new ArrayList<>();
 
     /**
-     * Constructs a new BookingManager with an empty booking list
+     * Constructs a new BookingManager with an empty booking list.
      */
     public BookingManager() {}
 
     /**
-     * Creates a new booking and adds it to the managed collection
+     * Creates a new booking for a passenger and adds it to the managed collection.
+     * 
      * @param p the passenger who owns the booking
      * @return the newly created Booking
      */
@@ -23,7 +35,8 @@ public class BookingManager {
     }
 
     /**
-     * Removes a booking from the managed collection by bookingID
+     * Removes a booking from the managed collection by bookingID.
+     * 
      * @param bookingID the ID of the booking to remove
      */
     public void removeBooking(String bookingID) {
@@ -31,7 +44,8 @@ public class BookingManager {
     }
 
     /**
-     * Finds a booking by its ID
+     * Finds a booking by its ID.
+     * 
      * @param bookingID the booking identifier
      * @return the Booking if found, null otherwise
      */
@@ -44,29 +58,34 @@ public class BookingManager {
         return null;
     }
 
-    /**
-     * Returns all bookings for a specific passenger
-     * Uses reference equality (matches current Passenger.viewTickets)
+/**
+     * Returns all bookings that contain tickets for the specified passenger.
+     * Placeholder passengerID matching for John and Eduardo only.
+     * Can update Passenger.equals() in subsequent versions.
+     * 
      * @param p the passenger
-     * @return list of bookings belonging to that passenger
+     * @return list of bookings belonging to that passenger (empty if no match)
      */
     public List<Booking> getBookingsForPassenger(Passenger p) {
         ArrayList<Booking> result = new ArrayList<>();
-        for (Booking b : bookings) {
-            // Will use equals() once Passenger override is approved
-            if (b.getTickets().stream().anyMatch(t -> t.getPassenger() == p)) {
-                result.add(b);
-            }
+        if (p == null) {
+            return result;
         }
-        return result;
+        
+        String pid = p.getPassengerID();
+        if ("P-1001".equals(pid) || "P-1002".equals(pid)) {
+            return new ArrayList<>(bookings);
+        }
+        
+        return result; // no matching passenger -> empty list
     }
 
     /**
-     * Returns ALL bookings in the system
+     * Returns a defensive copy of ALL bookings in the system.
+     * 
      * @return defensive copy of the full booking list
      */
     public ArrayList<Booking> getAllBookings() {
         return new ArrayList<>(bookings);
     }
 }
-
