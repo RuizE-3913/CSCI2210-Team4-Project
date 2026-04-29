@@ -1,14 +1,14 @@
-/**
- * Core class representing a single flight in the airline system.
- * Holds location, timing, status, aircraft, and optional FlightAssignment data.
- * 
- * Responsibilities: Store flight details and provide basic status/seat queries.
- * Collaborators: Airport, Terminal, Schedule, Aircraft, FlightAssignment.
- * 
+
+/** 
  * @author Eugene Ruiz
- * @version 2.1
- * @date 2026-04-12
+ * @version 2.2
+ * @date 2026-04-29
  * CSCI 2210 Project Stage 3
+*/
+
+/**
+ * Core class representing a single flight in the airline system
+ * Holds location, timing, status, and aircraft data
  */
 public class Flight {
     private String flightNumber;
@@ -21,19 +21,10 @@ public class Flight {
     private String status;
     private Aircraft aircraft;
     private FlightAssignment flightAssignment;
+    private double price;
 
     /**
-     * Constructs a new Flight with all required details.
-     * 
-     * @param flightNumber       unique flight identifier (e.g., "AA123")
-     * @param origin             departure airport
-     * @param destination        arrival airport
-     * @param departureTerminal  terminal at origin airport
-     * @param arrivalTerminal    terminal at destination airport
-     * @param departureTime      departure schedule
-     * @param arrivalTime        arrival schedule
-     * @param status             initial flight status (e.g., "ON_TIME")
-     * @param aircraft           aircraft assigned to this flight
+     * Constructor, ensures Flight state
      */
     public Flight(String flightNumber, Airport origin, Airport destination,
                   Terminal departureTerminal, Terminal arrivalTerminal,
@@ -50,8 +41,7 @@ public class Flight {
         this.aircraft = aircraft;
     }
 
-    // ==================== Getters & Setters ====================
-
+    // Getters & Setters
     public String getFlightNumber() { return flightNumber; }
     public void setFlightNumber(String flightNumber) { this.flightNumber = flightNumber; }
     public Airport getOrigin() { return origin; }
@@ -70,9 +60,11 @@ public class Flight {
     public void setStatus(String status) { this.status = status; }
     public Aircraft getAircraft() { return aircraft; }
     public void setAircraft(Aircraft aircraft) { this.aircraft = aircraft; }
+    public double getPrice(){ return price; } //new
+    public void setPrice(double price) { this.price = price; } //new
 
     /**
-     * Returns the FlightAssignment linked to this flight.
+     * Returns the FlightAssignment linked to this flight (optional).
      * @return the FlightAssignment or null if none assigned
      */
     public FlightAssignment getFlightAssignment() {
@@ -81,16 +73,14 @@ public class Flight {
 
     /**
      * Links (or updates) the FlightAssignment for this flight.
-     * @param flightAssignment the assignment to link
+     * @param flightAssignment the assignment to link (can be null)
      */
     public void setFlightAssignment(FlightAssignment flightAssignment) {
         this.flightAssignment = flightAssignment;
     }
 
     /**
-     * Returns the number of available seats on this flight.
-     * Delegates to the assigned Aircraft.
-     * @return number of available seats, or 0 if no aircraft assigned
+     * Returns number of available seats on this flight
      */
     public int getAvailableSeats() {
         return (aircraft != null) ? 
@@ -98,24 +88,19 @@ public class Flight {
     }
 
     /**
-     * Updates the flight status (e.g., "ON_TIME", "DELAYED", "CANCELLED").
-     * @param newStatus the new status value
+     * Updates the flight status
      */
-    public void updateStatus(String newStatus) { 
-        this.status = newStatus; 
-    }
+    public void updateStatus(String newStatus) { this.status = newStatus; }
 
     /**
-     * Returns a formatted summary of key flight details.
-     * Includes FlightAssignment info when present.
-     * @return formatted flight details string
+     * Returns a formatted summary of key flight details
+     * Now includes FlightAssignment info when present
      */
     public String getFlightDetails() {
         String assignmentInfo = (flightAssignment != null) 
             ? " | Assignment: " + flightAssignment.getAssignmentID() 
             : " | No assignment yet";
-        return "Flight: " + flightNumber + " | From: " + 
-               (origin != null ? origin.getAirportCode() : "N/A") +
+        return "Flight: " + flightNumber + " | From: " + (origin != null ? origin.getAirportCode() : "N/A") +
                " | To: " + (destination != null ? destination.getAirportCode() : "N/A") + 
                " | Status: " + status + assignmentInfo;
     }
