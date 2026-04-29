@@ -14,11 +14,13 @@ public class Booking {
     private String bookingID;
     private Date bookingDate;
     private String status;
+    private Passenger passenger;
     private ArrayList<Ticket> tickets = new ArrayList<>();
 
-    public Booking(String bookingID, Date bookingDate) {
+    public Booking(String bookingID, Date bookingDate, Passenger passenger) {
         this.bookingID = bookingID;
         this.bookingDate = bookingDate;
+        this.passenger = passenger;
         this.status = "PENDING"; 
     }
 
@@ -27,7 +29,16 @@ public class Booking {
     public Date getBookingDate() { return bookingDate; }
     public void setBookingDate(Date bookingDate) { this.bookingDate = bookingDate; }
     public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(String status) { 
+        this.status = status; 
+        
+        //keep tickets in sync with booking label for status
+        for (Ticket t : tickets){
+            t.setStatus(status);
+        }
+    }
+    public Passenger getPassenger() { return passenger; }
+    public void setPassenger(Passenger passenger){ this.passenger = passenger; }
     public ArrayList<Ticket> getTickets() { return new ArrayList<>(tickets); }
 
     public void addTicket(Ticket t) { tickets.add(t); }
