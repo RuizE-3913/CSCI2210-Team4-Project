@@ -1,6 +1,4 @@
 
-
-
 /**
  * Abstract base class representing a person. 
  * Contains shared attributes for Passengers and Staff.
@@ -33,6 +31,15 @@ public class Person {
     }
     
     /**
+    * Updates the person's name.
+    * 
+    * @param name the new name
+    */
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    /**
      * Returns the person's contact information.
      * 
      * @return the contact information
@@ -44,9 +51,9 @@ public class Person {
     /**
      * Updates the person's contact information.
      * 
-     * @param newInfo the new contact information
+     * @param contactInfo the new contact information
      */
-    public void updateContactInfo(String newInfo) {
-        this.contactInfo = newInfo;
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
 }
