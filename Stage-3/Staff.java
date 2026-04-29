@@ -1,5 +1,4 @@
 
-
 import java.util.List;
 /**
  * Represents a staff member in the system.
@@ -61,4 +60,14 @@ public class Staff extends Person {
     public String getRole() {
         return role;
     }
+
+    /**
+     * Sets the staff role.
+     * 
+     * @param role the staff member's role
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
 }
