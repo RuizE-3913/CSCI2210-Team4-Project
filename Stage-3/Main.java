@@ -1,3 +1,4 @@
+
 /**
  * MAIN PROGRAM FOR SKYHIGH AIRLINES MANAGEMENT SYSTEM
  * 
@@ -7,7 +8,7 @@
  * @author Eugene Ruiz
  * @author Joseph Heifner
  * @author Labeeb Md
- * @date 04-22-2026
+ * @date 04-29-2026
  */
 
 import java.util.*;
@@ -37,111 +38,82 @@ public class Main {
 
     private static void dummyData() {
 
-    AirportManager am = airline.getAirportManager();
-    FlightManager fm = airline.getFlightManager();
-    StaffManager sm = airline.getStaffManager();
-    TicketManager tm = airline.getTicketManager();
-    BookingManager bm = airline.getBookingManager();
+        AirportManager am = airline.getAirportManager();
+        FlightManager fm = airline.getFlightManager();
+        StaffManager sm = airline.getStaffManager();
+        TicketManager tm = airline.getTicketManager();
+        BookingManager bm = airline.getBookingManager();
 
+        Airport phx = new Airport("PHX", "Phoenix Sky Harbor", "Phoenix, AZ");
+        Airport lax = new Airport("LAX", "Los Angeles International", "Los Angeles, CA");
+        Airport las = new Airport("LAS", "Harry Reid International", "Las Vegas, NV");
+        Airport dfw = new Airport("DFW", "Dallas Fort Worth International", "Dallas, TX");
+        Airport ord = new Airport("ORD", "O'Hare International", "Chicago, IL");
 
-    // AIRPORTS
-    
-    Airport phx = new Airport("PHX", "Phoenix Sky Harbor", "Phoenix, AZ");
-    Airport lax = new Airport("LAX", "Los Angeles International", "Los Angeles, CA");
-    Airport las = new Airport("LAS", "Harry Reid International", "Las Vegas, NV");
-    Airport dfw = new Airport("DFW", "Dallas Fort Worth International", "Dallas, TX");
-    Airport ord = new Airport("ORD", "O'Hare International", "Chicago, IL");
+        am.addAirport(phx);
+        am.addAirport(lax);
+        am.addAirport(las);
+        am.addAirport(dfw);
+        am.addAirport(ord);
 
-    am.addAirport(phx);
-    am.addAirport(lax);
-    am.addAirport(las);
-    am.addAirport(dfw);
-    am.addAirport(ord);
+        Aircraft a1 = new Aircraft("AC-100", "Boeing 737", 60);
+        a1.generateSeats();
 
+        Aircraft a2 = new Aircraft("AC-200", "Airbus A320", 72);
+        a2.generateSeats();
 
-    // AIRCRAFT
+        Aircraft a3 = new Aircraft("AC-300", "Boeing 787 Dreamliner", 90);
+        a3.generateSeats();
 
-    Aircraft a1 = new Aircraft("AC-100", "Boeing 737", 10);
-    a1.generateSeats();
+        Flight f1 = new Flight("AA123", phx, lax,
+            new Terminal("T1","Terminal 1"), new Terminal("T2","Terminal 2"),
+            new Schedule("S1","08:00","10:00"),
+            new Schedule("S2","10:30","12:30"),
+            "ON_TIME", a1);
 
-    Aircraft a2 = new Aircraft("AC-200", "Airbus A320", 12);
-    a2.generateSeats();
+        Flight f2 = new Flight("DL455", lax, las,
+            new Terminal("T3","Terminal 3"), new Terminal("T4","Terminal 4"),
+            new Schedule("S3","11:00","12:00"),
+            new Schedule("S4","12:30","13:30"),
+            "ON_TIME", a2);
 
-    Aircraft a3 = new Aircraft("AC-300", "Boeing 787 Dreamliner", 15);
-    a3.generateSeats();
+        Flight f3 = new Flight("UA789", dfw, ord,
+            new Terminal("T5","Terminal 5"), new Terminal("T6","Terminal 6"),
+            new Schedule("S5","14:00","16:30"),
+            new Schedule("S6","17:00","19:30"),
+            "DELAYED", a3);
 
+        // Prices
+        f1.setPrice(199.99);
+        f2.setPrice(149.99);
+        f3.setPrice(299.99);
 
-    // FLIGHTS
+        fm.addFlight(f1);
+        fm.addFlight(f2);
+        fm.addFlight(f3);
 
-    Flight f1 = new Flight(
-            "AA123",
-            phx,
-            lax,
-            new Terminal("T1", "Terminal 1"),
-            new Terminal("T2", "Terminal 2"),
-            new Schedule("S1", "08:00", "10:00"),
-            new Schedule("S2", "10:30", "12:30"),
-            "ON_TIME",
-            a1
-    );
+        Staff s1 = new Staff("Alex Morgan","alex@skyhigh.com","S100","Pilot");
+        Staff s2 = new Staff("Jordan Lee","jordan@skyhigh.com","S101","Co-Pilot");
+        Staff s3 = new Staff("Taylor Smith","taylor@skyhigh.com","S102","Flight Attendant");
 
-    Flight f2 = new Flight(
-            "DL455",
-            lax,
-            las,
-            new Terminal("T3", "Terminal 3"),
-            new Terminal("T4", "Terminal 4"),
-            new Schedule("S3", "11:00", "12:00"),
-            new Schedule("S4", "12:30", "13:30"),
-            "ON_TIME",
-            a2
-    );
+        sm.addStaff(s1);
+        sm.addStaff(s2);
+        sm.addStaff(s3);
 
-    Flight f3 = new Flight(
-            "UA789",
-            dfw,
-            ord,
-            new Terminal("T5", "Terminal 5"),
-            new Terminal("T6", "Terminal 6"),
-            new Schedule("S5", "14:00", "16:30"),
-            new Schedule("S6", "17:00", "19:30"),
-            "DELAYED",
-            a3
-    );
+        sm.assignStaffToFlight(s1,f1);
+        sm.assignStaffToFlight(s2,f1);
+        sm.assignStaffToFlight(s3,f2);
 
-    fm.addFlight(f1);
-    fm.addFlight(f2);
-    fm.addFlight(f3);
+        Passenger p = new Passenger("Chris Johnson","chris@email.com","P001","PASS123");
 
+        Booking b = bm.createBooking(p);
 
-    // STAFF
+        Ticket t = tm.createTicket(p,f1);
+        t.assignSeat(a1.findSeat("1A"));
 
-    Staff s1 = new Staff("Alex Morgan", "alex@skyhigh.com", "S100", "Pilot");
-    Staff s2 = new Staff("Jordan Lee", "jordan@skyhigh.com", "S101", "Co-Pilot");
-    Staff s3 = new Staff("Taylor Smith", "taylor@skyhigh.com", "S102", "Flight Attendant");
+        b.addTicket(t);
 
-    sm.addStaff(s1);
-    sm.addStaff(s2);
-    sm.addStaff(s3);
-
-    sm.assignStaffToFlight(s1, f1);
-    sm.assignStaffToFlight(s2, f1);
-    sm.assignStaffToFlight(s3, f2);
-
-
-    // PASSENGER BOOKING STUFF
-
-    Passenger p = new Passenger("Chris Johnson", "chris@email.com", "P001", "PASS123");
-
-    Booking b = bm.createBooking(p);
-
-    Ticket t = tm.createTicket(p, f1);
-    t.assignSeat(a1.findSeat("1"));
-
-    b.addTicket(t);
-
-    //pre-confirm one booking so system isn't empty
-    bm.confirmBooking(b.getBookingID());
+        bm.confirmBooking(b.getBookingID());
         
     }
 
@@ -154,12 +126,12 @@ public class Main {
 
             System.out.println("\n===== MAIN MENU =====");
             System.out.println("1. FLIGHT MANAGEMENT");
-            System.out.println("2. BOOK A FLIGHT");
-            System.out.println("3. VIEW BOOKINGS");
-            System.out.println("4. AIRPORT MANAGEMENT");
-            System.out.println("5. PAYMENT (CARD)");
-            System.out.println("6. STAFF MANAGEMENT");
-            System.out.println("7. SYSTEM REPORT");
+            System.out.println("2. BOOKING MENU");
+            System.out.println("3. AIRPORT MANAGEMENT");
+            System.out.println("4. PAYMENT (CARD)");
+            System.out.println("5. STAFF MANAGEMENT");
+            System.out.println("6. SYSTEM REPORT");
+            System.out.println("7. PASSENGER MANAGEMENT");
             System.out.println("0. EXIT");
 
             int choice = inputInt();
@@ -168,11 +140,11 @@ public class Main {
 
                 case 1 -> flightMenu();
                 case 2 -> bookingMenu();
-                case 3 -> viewBookings();
-                case 4 -> airportMenu();
-                case 5 -> paymentMenu();
-                case 6 -> staffMenu();
-                case 7 -> systemReport();
+                case 3 -> airportMenu();
+                case 4 -> paymentMenu();
+                case 5 -> staffMenu();
+                case 6 -> systemReport();
+                case 7 -> passengerMenu();
                 case 0 -> {
                     System.out.println("Goodbye!");
                     return;
@@ -194,6 +166,7 @@ public class Main {
         System.out.println("2. Add Flight");
         System.out.println("3. Remove Flight");
         System.out.println("4. Select Flight");
+        System.out.println("5. Update Flight");
 
         int choice = inputInt();
 
@@ -251,6 +224,34 @@ public class Main {
                 selectedFlight = fm.findFlight(scanner.nextLine());
                 System.out.println(selectedFlight != null ? "Selected!" : "Not found.");
             }
+            
+            case 5 -> {
+                System.out.print("Enter flight number to update: ");
+                String fn = scanner.nextLine();
+
+                Flight f = fm.findFlight(fn);
+
+                if (f == null) {
+                    System.out.println("Flight not found.");
+                    return;
+                }
+
+                System.out.print("New origin airport code: ");
+                Airport origin = am.findAirport(scanner.nextLine());
+
+                System.out.print("New destination airport code: ");
+                Airport dest = am.findAirport(scanner.nextLine());
+
+                if (origin == null || dest == null) {
+                    System.out.println("Invalid airport(s).");
+                    return;
+                }
+
+                f.setOrigin(origin);
+                f.setDestination(dest);
+
+                System.out.println("Flight updated successfully.");
+            }
         }
     }
 
@@ -259,54 +260,148 @@ public class Main {
     // =======================================
     private static void bookingMenu() {
 
-        if (selectedFlight == null) {
-            System.out.println("Select a flight first.");
-            return;
-        }
+    BookingManager bm = airline.getBookingManager();
+    TicketManager tm = airline.getTicketManager();
 
-        System.out.print("Passenger name: ");
-        Passenger p = new Passenger(scanner.nextLine(), "email@test.com",
-                "P-" + System.currentTimeMillis(), "PASS");
+    System.out.println("\n--- BOOKING MENU ---");
+    System.out.println("1. View All Bookings");
+    System.out.println("2. Create Booking");
+    System.out.println("3. Update Booking");
+    System.out.println("4. Cancel Booking");
+    System.out.println("0. Back");
 
-        BookingManager bm = airline.getBookingManager();
-        TicketManager tm = airline.getTicketManager();
+    int choice = inputInt();
 
-        activeBooking = bm.createBooking(p);
+    switch (choice) {
 
-        System.out.println("Available seats: " + selectedFlight.getAvailableSeats());
+        // VIEW ALL BOOKINGS
+        case 1 -> {
 
-        System.out.print("Enter seat number: ");
-        String seatNum = scanner.nextLine();
+            for (Booking b : bm.getAllBookings()) {
+                System.out.println("\nBooking ID: " + b.getBookingID());
+                System.out.println("Status: " + b.getStatus());
 
-        Seat seat = selectedFlight.getAircraft().findSeat(seatNum);
+                Passenger p = b.getPassenger();
+                System.out.println("Passenger: " + p.getName());
 
-        if (seat == null || !seat.isSeatAvailable()) {
-            System.out.println("Invalid seat.");
-            return;
-        }
-
-        Ticket ticket = tm.createTicket(p, selectedFlight);
-        ticket.assignSeat(seat);
-
-        activeBooking.addTicket(ticket);
-
-        System.out.println("Booking created. STATUS = PENDING");
-        System.out.println("Proceed to PAYMENT.");
-    }
-
-    // =======================================
-    // VIEW BOOKINGS
-    // =======================================
-    private static void viewBookings() {
-
-        for (Booking b : airline.getBookingManager().getAllBookings()) {
-            System.out.println("\nBooking: " + b.getBookingID() + " | " + b.getStatus());
-
-            for (Ticket t : b.getTickets()) {
-                System.out.println(" - " + t.getTicketDetails());
+                for (Ticket t : b.getTickets()) {
+                    System.out.println(" - " + t.getTicketDetails());
+                }
             }
         }
+
+        // CREATE BOOKING
+        case 2 -> {
+
+            if (selectedFlight == null) {
+                System.out.println("Select a flight first.");
+                return;
+            }
+
+            System.out.print("Passenger name: ");
+            Passenger p = new Passenger(scanner.nextLine(),
+                    "email@test.com",
+                    "P-" + System.currentTimeMillis(),
+                    "PASS");
+
+            activeBooking = bm.createBooking(p);
+
+            System.out.println("Available seats:");
+            selectedFlight.getAircraft().printSeatMap();
+
+            System.out.print("Enter seat (e.g. 12A): ");
+            Seat seat = selectedFlight.getAircraft().findSeat(scanner.nextLine());
+
+            if (seat == null || !seat.isSeatAvailable()) {
+                System.out.println("Invalid seat.");
+                return;
+            }
+
+            Ticket ticket = tm.createTicket(p, selectedFlight);
+            ticket.assignSeat(seat);
+
+            activeBooking.addTicket(ticket);
+
+            System.out.println("Booking created → PENDING PAYMENT");
+        }
+
+        // UPDATE BOOKING
+        case 3 -> {
+
+            System.out.print("Enter Booking ID: ");
+            String id = scanner.nextLine().trim();
+            Booking b = airline.getBookingManager().findBooking(id);
+
+            if (b == null) {
+                System.out.println("Booking not found.");
+                return;
+            }
+
+            System.out.println("1. Update Passenger Name");
+            System.out.println("2. Update Seat");
+            System.out.println("3. Change Status");
+
+            int updateChoice = inputInt();
+
+            switch (updateChoice) {
+
+                case 1 -> {
+                    System.out.print("New passenger name: ");
+                    b.getPassenger().setName(scanner.nextLine());
+                }
+
+                case 2 -> {
+                    Ticket t = b.getTickets().get(0); // 1 ticket per book
+                    Flight f = t.getFlight();
+                    
+                    System.out.print("New seat (e.g. 14B): ");
+                    String seatNum = scanner.nextLine();
+                    
+                    Seat newSeat = f.getAircraft().findSeat(seatNum);
+
+                    if (newSeat == null) {
+                        System.out.println("Seat does not exist.");
+                        return;
+                    }
+
+                    if (!newSeat.isSeatAvailable()) {
+                        System.out.println("Seat already taken.");
+                        return;
+                    }
+                    
+                    t.assignSeat(newSeat);
+                }
+
+                case 3 -> {
+                    System.out.print("New status: ");
+                    b.setStatus(scanner.nextLine());
+                }
+            }
+
+            System.out.println("Booking updated.");
+        }
+
+        // CANCEL BOOKING
+        case 4 -> {
+
+            System.out.print("Enter Booking ID: ");
+            Booking b = bm.findBooking(scanner.nextLine());
+
+            if (b == null) {
+                System.out.println("Booking not found.");
+                return;
+            }
+
+            b.cancelBooking();
+
+            System.out.println("Booking cancelled.");
+        }
+
+        case 0 -> {
+            System.out.println("Returning...");
+        }
     }
+}
 
     // =======================================
     // AIRPORT MENU
@@ -319,6 +414,7 @@ public class Main {
         System.out.println("1. View Airports");
         System.out.println("2. Add Airport");
         System.out.println("3. Remove Airport");
+        System.out.println("4. Update Airport");
 
         int choice = inputInt();
 
@@ -349,6 +445,24 @@ public class Main {
                         ? "Removed"
                         : "Not found");
             }
+            
+            case 4 -> {
+                System.out.print("Code: ");
+                Airport a = am.findAirport(scanner.nextLine());
+
+                if (a == null) {
+                    System.out.println("Not found.");
+                    return;
+                }
+
+                System.out.print("New name: ");
+                a.setName(scanner.nextLine());
+
+                System.out.print("New location: ");
+                a.setLocation(scanner.nextLine());
+
+                System.out.println("Airport Updated.");
+            }
         }
     }
 
@@ -362,26 +476,34 @@ public class Main {
             return;
         }
 
+        double total = 0;
+
+        for (Ticket t : activeBooking.getTickets()) {
+            total += t.getFlight().getPrice();
+        }
+
+        System.out.println("Total Due: $" + total);
+
         System.out.print("Enter card amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
 
-        Payment payment = new Payment(activeBooking, amount, "CARD");
-
-        boolean success = payment.processPayment();
-
-        if (success) {
-            payment.updateStatus("COMPLETED");
-
-            airline.getBookingManager()
-                    .confirmBooking(activeBooking.getBookingID());
-
-            System.out.println("PAYMENT SUCCESSFUL → BOOKING CONFIRMED");
-        } else {
-            payment.updateStatus("FAILED");
-            System.out.println("PAYMENT FAILED → BOOKING STILL PENDING");
+        if (amount != total) {
+            System.out.println("Incorrect amount.");
+            return;
         }
 
-        System.out.println(payment.getPaymentDetails());
+        Payment payment = new Payment(activeBooking, amount, "CARD");
+
+        if (payment.processPayment()) {
+            
+            payment.updateStatus("COMPLETED");
+            Booking b = activeBooking;
+            
+            b.setStatus("CONFIRMED");
+            
+            airline.getBookingManager().confirmBooking(b.getBookingID());
+            System.out.println("Payment successful. Booking confirmed");
+        }   
     }
 
     // =======================================
@@ -395,7 +517,8 @@ public class Main {
         System.out.println("1. View Staff");
         System.out.println("2. Add Staff");
         System.out.println("3. Remove Staff");
-        System.out.println("4. Assign Staff to Selected Flight");
+        System.out.println("4. Assign Staff");
+        System.out.println("5. Update Staff");
 
         int choice = inputInt();
 
@@ -447,6 +570,24 @@ public class Main {
                 sm.assignStaffToFlight(s, selectedFlight);
                 System.out.println("Assigned to flight.");
             }
+            
+            case 5 -> {
+                System.out.print("Staff ID: ");
+                Staff s = sm.findStaff(scanner.nextLine());
+
+                if (s == null) {
+                    System.out.println("Not found.");
+                    return;
+                }
+
+                System.out.print("New name: ");
+                s.setName(scanner.nextLine());
+
+                System.out.print("New role: ");
+                s.setRole(scanner.nextLine());
+
+                System.out.println("Staff Updated.");
+            }
         }
     }
 
@@ -488,8 +629,90 @@ public class Main {
 
         System.out.println("\n==================================");
     }
+    
+    // =======================================
+    // PASSENGER MENU
+    // =======================================
+    private static void passengerMenu() {
 
-    // ─────────────────────────────────────────────
+        BookingManager bm = airline.getBookingManager();
+
+        System.out.println("\n--- PASSENGER MENU ---");
+        System.out.println("1. View Passenger Info (by Booking)");
+        System.out.println("2. Update Passenger Name");
+        System.out.println("3. Update Passenger Contact Info");
+        System.out.println("0. Back");
+
+        int choice = inputInt();
+
+        switch (choice) {
+
+            // VIEW PASSENGER INFO
+            case 1 -> {
+
+                System.out.print("Enter Booking ID: ");
+                String id = scanner.nextLine().trim();
+                Booking b = airline.getBookingManager().findBooking(id);
+
+                if (b == null) {
+                    System.out.println("Booking not found.");
+                    return;
+                }
+
+                Passenger p = b.getPassenger();
+
+                System.out.println("\nPassenger Info:");
+                System.out.println("Name: " + p.getName());
+                System.out.println("Contact: " + p.getContactInfo());
+            }
+
+            // UPDATE NAME
+            case 2 -> {
+
+                System.out.print("Enter Booking ID: ");
+                String id = scanner.nextLine().trim();
+                Booking b = airline.getBookingManager().findBooking(id);
+
+                if (b == null) {
+                    System.out.println("Booking not found.");
+                    return;
+                }
+
+                Passenger p = b.getPassenger();
+
+                System.out.print("New Name: ");
+                p.setName(scanner.nextLine());
+
+                System.out.println("Passenger name updated.");
+            }
+
+            // UPDATE CONTACT INFO
+            case 3 -> {
+
+                System.out.print("Enter Booking ID: ");
+                String id = scanner.nextLine().trim();
+                Booking b = airline.getBookingManager().findBooking(id);
+
+                if (b == null) {
+                    System.out.println("Booking not found.");
+                    return;
+                }
+
+                Passenger p = b.getPassenger();
+
+                System.out.print("New Contact Info (email/phone): ");
+                p.setContactInfo(scanner.nextLine());
+
+                System.out.println("Passenger contact updated.");
+            }
+
+            case 0 -> {
+                System.out.println("Returning...");
+            }
+        }
+    }
+
+    // input method for the scanner
     private static int inputInt() {
         try {
             return Integer.parseInt(scanner.nextLine());
