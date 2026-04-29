@@ -1,6 +1,5 @@
 
 import java.util.*;
-
 /**
  * Manages collection of all Bookings
  */
@@ -18,7 +17,7 @@ public class BookingManager {
      * @return the newly created Booking
      */
     public Booking createBooking(Passenger p) {
-        Booking b = new Booking("B" + System.currentTimeMillis(), new Date());
+        Booking b = new Booking("B" + System.currentTimeMillis(), new Date(), p);
         bookings.add(b);
         return b;
     }
@@ -38,7 +37,7 @@ public class BookingManager {
      */
     public Booking findBooking(String bookingID) {
         for (Booking b : bookings) {
-            if (b.getBookingID().equals(bookingID)) {
+            if (b.getBookingID().equalsIgnoreCase(bookingID.trim())) {
                 return b;
             }
         }
