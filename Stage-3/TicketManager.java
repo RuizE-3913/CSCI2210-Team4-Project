@@ -22,7 +22,7 @@ public class TicketManager {
      * @return the newly created Ticket
      */
     public Ticket createTicket(Passenger p, Flight f) {
-        Ticket t = new Ticket("T" + System.currentTimeMillis(), f, null, "CONFIRMED", p);
+        Ticket t = new Ticket("T" + System.currentTimeMillis(), f, null, "Pending", p);
         tickets.add(t);
         return t;
     }
