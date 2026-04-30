@@ -1,6 +1,4 @@
 
-
-
 import java.util.ArrayList;
 
 /**
@@ -58,12 +56,17 @@ public class Passenger extends Person {
         return passportNumber;
     }
 
+    
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
     /**
      * Updates contact information (optional override).
-     * @param newInfo the new contact information
+     * @param contactInfo the new contact information
      */
     @Override
-    public void updateContactInfo(String newInfo) {
-        super.updateContactInfo(newInfo);
+    public void setContactInfo(String contactInfo) {
+        super.setContactInfo(contactInfo);
     }
 }
