@@ -9,6 +9,7 @@ public class Airline {
     private BookingManager bookingManager;
     private TicketManager ticketManager;
     private FlightManager flightManager; //new addition
+    private PassengerManager passengerManager; //new
 
     public Airline(String airlineName) {
         this.airlineName = airlineName;
@@ -17,6 +18,7 @@ public class Airline {
         this.bookingManager = new BookingManager();
         this.ticketManager = new TicketManager();
         this.flightManager = new FlightManager(); //new addition
+        this.passengerManager = new PassengerManager(); //new
     }
 
     public AirportManager getAirportManager() { return airportManager; }
@@ -25,4 +27,5 @@ public class Airline {
     public TicketManager getTicketManager() { return ticketManager; }
     public String getAirlineName() { return airlineName; }
     public FlightManager getFlightManager() { return flightManager; } //new method
+    public PassengerManager getPassengerManager() { return passengerManager; } //new method
 }
