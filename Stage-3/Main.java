@@ -8,7 +8,7 @@
  * @author Eugene Ruiz
  * @author Joseph Heifner
  * @author Labeeb Md
- * @date 04-29-2026
+ * @date 04-30-2026
  */
 
 import java.util.*;
@@ -24,13 +24,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        airline = new Airline("SkyHigh Airlines");
+       airline = new Airline("SkyHigh Airlines");
 
         dummyData(); // optional starter data
 
-        System.out.println("=== SKYHIGH AIRLINES SYSTEM ===");
+        //run this if you want the little terminal console menu
+//        runMainMenu(); 
 
-        runMainMenu();
+        //run this to run the GUI menu
+        javax.swing.SwingUtilities.invokeLater(() -> {new MainMenuGUI(airline).setVisible(true);});
+        
     }
 
 
