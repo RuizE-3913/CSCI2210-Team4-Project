@@ -1,0 +1,9 @@
+Joseph Heifner
+660286383
+5/8/2026
+Professor Eduardo Ceh-Varela
+Stage 4
+
+Work Completed:
+
+In this stage, I was responsible for working on the original classes assigned to me since the first Stage, includig: Person, Passenger, Staff, StaffAssignment, StaffManager, FlightAssignment. I was also responsible for making almost all of the proper adjustments needed for the main program as well as any changes that allowed CRUD functionality to work in each of the source files before moving to the GUI. I was also responsible for creating the GUI files and making them work in an executable. I also made tweaks on the DataManagement file that is responsible for allowing reading/writing capabilities to simulate databases. 
