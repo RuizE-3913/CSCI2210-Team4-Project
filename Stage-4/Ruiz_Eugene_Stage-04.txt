@@ -1,0 +1,20 @@
+Eugene Ruiz
+5/08/2026
+Professor Eduardo Ceh-Varela
+Stage 4 Work Completed
+
+Summary of Work Completed
+
+In Stage 4, we successfully transformed the console-based application into a fully functional GUI-based Airline Management System with persistence.
+
+
+Key Accomplishments:
+
+• Complete GUI Implementation: Developed and integrated all major graphical interfaces including MainMenuGUI, ManagementMenuGUI, FlightManagementGUI, AirportManagementGUI, StaffManagementGUI, full booking flow (FlightSelectionGUI → SeatSelectionGUI → PaymentGUI), BookingManagementGUI, ManagePassengerGUI, and SystemReportGUI.
+• Persistence Layer: Implemented DataManager.java to handle save/load operations for entities (Airports, Flights, Staff, Passengers, Bookings, Tickets) using text files. Data now persists between sessions.
+• Full CRUD: All management areas now support Create, Read, Update, and Delete operations through the GUI interfaces.
+• Integration: Connected all GUI components with the existing managers and central Airline coordinator.
+• User Enhancements: Added real-time seat maps, dynamic tables, input validation, confirmation dialogs, and professional styling across all screens.
+• Documentation & Design: Updated the final UML diagram to reflect the complete system architecture and produced a comprehensive User Guide for all major features with screenshots.
+
+The team and I maintained adherence to object-oriented principles (SRP, encapsulation, and proper separation of concerns) while delivering the airline management system application key structural features.
